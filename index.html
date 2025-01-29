@@ -54,6 +54,29 @@
     .message-form__button {
       margin: 10px;
     }
+
+    .change-name-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .change-name-button::before {
+      content: '✏️';
+      font-size: 24px;
+    }
+
+    .change-name-button:hover::after {
+      content: ' Change Name';
+      font-size: 16px;
+      position: absolute;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      padding: 5px;
+      border-radius: 3px;
+      top: -30px;
+      left: 0;
+    }
   </style>
 </head>
 <body>
@@ -64,6 +87,7 @@
     <input class="message-form__input" placeholder="Type a message.." type="text"/>
     <input class="message-form__button" value="Send" type="submit"/>
   </form>
+  <button class="change-name-button"></button> <!-- Change Name button with pencil icon -->
   <script src="./script.js"></script>
 </body>
 </html>
