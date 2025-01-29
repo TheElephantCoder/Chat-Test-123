@@ -3,7 +3,7 @@ const CLIENT_ID = 'IQRiUyk6juaLVuwR';
 
 const drone = new ScaleDrone(CLIENT_ID, {
   data: { // Will be sent out as clientData via events
-    name: getRandomName(),
+    name: getUserName(),
     color: getRandomColor(),
   },
 });
@@ -57,14 +57,21 @@ drone.on('error', error => {
   console.error(error);
 });
 
-function getRandomName() {
-  const adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson"];
-  const nouns = ["waterfall", "river", "breeze", "moon", "rain", "wind", "sea", "morning", "snow", "lake", "sunset", "pine", "shadow", "leaf", "dawn", "glitter", "forest", "hill", "cloud", "meadow"];
-  return (
-    adjs[Math.floor(Math.random() * adjs.length)] +
-    "_" +
-    nouns[Math.floor(Math.random() * nouns.length)]
-  );
+function getUserName() {
+  let userName = localStorage.getItem('userName');
+  if (!userName) {
+    userName = prompt('Please enter your name:');
+    localStorage.setItem('userName', userName);
+  }
+  return userName;
+}
+
+function changeUserName() {
+  const newUserName = prompt('Enter your new name:');
+  if (newUserName) {
+    localStorage.setItem('userName', newUserName);
+    location.reload(); // Reload the page to apply the new name
+  }
 }
 
 function getRandomColor() {
@@ -120,6 +127,8 @@ const DOM = {
   messages: document.querySelector('.messages'),
   input: document.querySelector('.message-form__input'),
   form: document.querySelector('.message-form'),
+  changeNameButton: document.querySelector('.change-name-button'), // New button to change name
 };
 
 DOM.form.addEventListener('submit', sendMessage);
+DOM.changeNameButton.addEventListener('click', changeUserName); // Event listener for the change name button
